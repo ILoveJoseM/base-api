@@ -1,5 +1,11 @@
 ## laravel api扩展的基础类（学习自用）
 
+#### 安装
+
+````
+composer require "jose-chan/base-api"
+````
+
 #### Controller类
 
 - 提供了validate方法校验入参
