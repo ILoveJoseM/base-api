@@ -28,7 +28,15 @@ class Controller
 
         if($validator->fails())
         {
-            echo $validator->errors();
+            $err = $validator->errors()->toArray();
+
+            $err_msg = "";
+            foreach ($err as $field => $errors)
+            {
+                $err_msg .= "{$field}: " . implode(", ", $errors)." ";
+            }
+
+            $this->response([], 10001, "参数不正确：{$err_msg}")->send();
         }
     }
 
