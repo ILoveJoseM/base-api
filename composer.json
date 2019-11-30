@@ -21,7 +21,7 @@
   },
   "autoload": {
     "psr-4": {
-      "JoseChan\\Base\\Api": "src/"
+      "JoseChan\\Base\\Api\\": "src/"
     }
   },
   "autoload-dev": {
