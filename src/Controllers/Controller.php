@@ -37,6 +37,7 @@ class Controller
             }
 
             $this->response([], 10001, "参数不正确：{$err_msg}")->send();
+            die();
         }
     }
 
