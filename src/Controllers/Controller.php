@@ -9,6 +9,8 @@
 
 namespace JoseChan\Base\Api\Controllers;
 
+use Illuminate\Validation\ValidationException;
+
 /**
  * api控制器基类
  * Class Controller
@@ -21,23 +23,21 @@ class Controller
      * 参数检查
      * @param $data
      * @param $rule
+     * @throws ValidationException
      */
     protected function validate($data, $rule)
     {
         $validator = validator($data, $rule);
 
-        if($validator->fails())
-        {
+        if ($validator->fails()) {
             $err = $validator->errors()->toArray();
 
             $err_msg = "";
-            foreach ($err as $field => $errors)
-            {
-                $err_msg .= "{$field}: " . implode(", ", $errors)." ";
+            foreach ($err as $field => $errors) {
+                $err_msg .= "{$field}: " . implode(", ", $errors) . " ";
             }
 
-            $this->response([], 10001, "参数不正确：{$err_msg}")->send();
-            die();
+            throw new ValidationException($validator, $this->response([], 10001, "参数不正确：{$err_msg}"));
         }
     }
 
@@ -56,6 +56,6 @@ class Controller
         $result['msg'] = $msg;
         $result['code'] = $code;
 
-        return \response()->json($result, $status, $header);
+        return \response()->json($result, $status, $header)->setEncodingOptions(JSON_UNESCAPED_UNICODE);
     }
 }
